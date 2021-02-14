@@ -1,12 +1,14 @@
 const {check, validationResult} = require("express-validator")
 const {errorFormatter} = require("../../helper")
 
-exports.loginValidator = [
+exports.sigupValidator = [
     check("email")
         .trim()
-        .escape()
+        .notEmpty()
+        .withMessage("Email is required")
+        .bail()
         .isEmail()
-        .withMessage("Email Cannot be Empty")
+        .withMessage("Email is required")
         .bail()
         .isLength({min:6, max:50})
         .withMessage("Enter valid Email")
@@ -23,7 +25,7 @@ exports.loginValidator = [
     (req, res, next) => {
         const errors = validationResult(req).formatWith(errorFormatter)
         if(!errors.isEmpty()){
-            return res.status(422).json({message: errors.array(),code : 422})
+            return res.status(422).json({message: errors.array(), code : 422})
         }
         next()
     }

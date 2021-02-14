@@ -1,7 +1,9 @@
 let mongo = require("mongodb").MongoClient
 let config = require("./config")
 let constant = require("./constant")
+let dotenv = require("dotenv")
 
+dotenv.config()
 let _db;
 
 module.exports = {
@@ -11,7 +13,7 @@ module.exports = {
                 console.log("Database Error", err)
                 callback(constant.CONNETION_ERROR);
             } else {
-                _db = connection
+                _db = connection.db(process.env.MONGO_DB_NAME)
                 console.log("Database Connected...")
                 callback(constant.CONNETION_SUCCESS);
             }
