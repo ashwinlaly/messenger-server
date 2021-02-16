@@ -9,6 +9,6 @@ const AuthRoute = require("../Controller/authController")
 
 module.exports = (function() {
     routes.post("/login", loginValidator, AuthRoute.Login)
-    routes.post("/sigup", sigupValidator, AuthRoute.Signup)
+    routes.post("/signup", sigupValidator, AuthRoute.Signup)
     return routes;
 })

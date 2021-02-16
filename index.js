@@ -9,7 +9,7 @@ const express = require("express")
     db = require("./db");
 
 const routes = require("./routes/route")();
-
+let _socket;
 dotenv.config()
 
 app.use(bodyParser.urlencoded({extended : true}))
@@ -33,10 +33,24 @@ app.all("*", (request, response) => {
     })
 })
 
+io.on("connection", (socket) => {
+    _socket = socket
+
+    _socket.on("pong", (data) => {
+        _socket.emit("ping", {data})
+    })
+})
+
 let PORT = process.env.PORT || 1234
 
 db.connect((STATUS) => {
     if(STATUS == constant.CONNETION_SUCCESS) {
+
+        let userStream = db.get().collection("users").watch()
+        userStream.on("change", (next) => {
+            console.log(next)
+        })
+        
         http.listen(PORT, () => {
             console.log("Application running", PORT)
         })
