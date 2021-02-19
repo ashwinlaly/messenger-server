@@ -1,7 +1,6 @@
-const { constants } = require("buffer");
-const express = require("express")
+require("dotenv").config()
+const express = require("express"),
     app = express(),
-    dotenv = require("dotenv"),
     http = require("http").Server(app),
     bodyParser = require("body-parser"),
     io = require("socket.io")(http),
@@ -10,7 +9,6 @@ const express = require("express")
 
 const routes = require("./routes/route")();
 let _socket;
-dotenv.config()
 
 app.use(bodyParser.urlencoded({extended : true}))
 app.use(bodyParser.json())
@@ -27,10 +25,7 @@ app.use("/api/", routes);
 
 app.all("*", (request, response) => {
     console.log("~ Action -> " + request.connection.remoteAddress +"  " + request.method + " : " + request.url);
-    response.status(404).json({
-        message: "Invalid Url",
-        code : 404
-    })
+    response.status(404).json({message: constant.INVALID_URL, code : 404})
 })
 
 io.on("connection", (socket) => {
@@ -44,15 +39,9 @@ io.on("connection", (socket) => {
 let PORT = process.env.PORT || 1234
 
 db.connect((STATUS) => {
-    if(STATUS == constant.CONNETION_SUCCESS) {
-
-        let userStream = db.get().collection("users").watch()
-        userStream.on("change", (next) => {
-            console.log(next)
-        })
-        
+    if(STATUS == constant.CONNETION_SUCCESS) {        
         http.listen(PORT, () => {
-            console.log("Application running", PORT)
+            console.log(constant.APPLICAITON_RUNNING, PORT)
         })
     }
 })

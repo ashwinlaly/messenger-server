@@ -1,5 +1,5 @@
 const {check, validationResult} = require("express-validator")
-const {errorFormatter} = require("../../helper")
+const {errorFormatter} = require("../helper/responseHelper")
 
 exports.loginValidator = [
     check("email")

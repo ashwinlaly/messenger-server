@@ -1,6 +1,4 @@
-let dotenv = require("dotenv")
-
-dotenv.config()
+require("dotenv").config()
 
 let resource = {
     "development": {

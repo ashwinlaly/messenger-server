@@ -1,10 +1,8 @@
-let mongo = require("mongodb").MongoClient
-let config = require("./config")
-let constant = require("./constant")
-let dotenv = require("dotenv")
-
-dotenv.config()
-let _db;
+require("dotenv").config()
+let mongo = require("mongodb").MongoClient,
+    config = require("./config"),
+    constant = require("./constant"),
+    _db;
 
 module.exports = {
     connect : callback => {
