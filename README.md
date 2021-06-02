@@ -9,3 +9,17 @@ Package to Install:
 -> npm i mongodb --s
 -> npm i --save express-validator --s
 -> npm i bcrypt --s
+
+
+db.users.aggregate([
+    {
+        $lookup:{
+            from : "messages",
+            pipeline: [
+                {$match : { status : 1}}, 
+                {$project : { _id:0, user_id:0}}
+            ],
+            as : "messages"
+        }
+    }
+])

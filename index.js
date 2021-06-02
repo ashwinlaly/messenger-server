@@ -3,7 +3,6 @@ const express = require("express"),
     app = express(),
     http = require("http").Server(app),
     bodyParser = require("body-parser"),
-    io = require("socket.io")(http),
     constant = require("./constant"),
     db = require("./db");
 
@@ -29,11 +28,13 @@ app.all("*", (request, response) => {
 })
 
 io.on("connection", (socket) => {
-    _socket = socket
+    // _socket = socket
 
-    _socket.on("pong", (data) => {
-        _socket.emit("ping", {data})
-    })
+    // _socket.on("pong", (data) => {
+    //     _socket.emit("ping", {data})
+    // })
+
+    
 })
 
 let PORT = process.env.PORT || 1234
